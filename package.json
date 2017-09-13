@@ -16,5 +16,22 @@
     "eslint": "^4.6.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.5.3"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HughePaul/deep-clone-merge.git"
+  },
+  "keywords": [
+    "clone",
+    "merge",
+    "deep"
+  ],
+  "bugs": {
+    "url": "https://github.com/HughePaul/deep-clone-merge/issues"
+  },
+  "homepage": "https://github.com/HughePaul/deep-clone-merge#readme"
 }
