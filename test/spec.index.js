@@ -29,8 +29,8 @@ describe('deepCloneMerge', () => {
         result.should.eql({});
     });
 
-    it('should merge objects together', () => {
-        let result = deepCloneMerge(obj1, obj2);
+    it('should merge objects together, ignoring null objects', () => {
+        let result = deepCloneMerge(obj1, null, obj2, null);
 
         result.should.eql({
             number: 2,

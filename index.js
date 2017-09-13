@@ -15,7 +15,7 @@ function mergeValue(dest, src) {
 }
 
 function deepCloneMerge() {
-    return [].reduce.call(arguments, mergeValue, {});
+    return [].filter.call(arguments, isObject).reduce(mergeValue, {});
 }
 
 module.exports = deepCloneMerge;
