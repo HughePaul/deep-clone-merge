@@ -59,5 +59,34 @@ describe('deepCloneMerge', () => {
         result.should.eql([1, 2, 3]);
     });
 
+    it('should clone a circular object', () => {
+        obj1.obj2 = obj2;
+        obj2.obj1 = obj1;
+        let result = deepCloneMerge(obj1);
+        result.obj2.obj1.should.equal(result);
+        result.obj2.obj1.obj2.should.equal(result.obj2);
+    });
+
+    it('should clone circular objects to the same referenced object', () => {
+        obj1.obj2 = obj2;
+        obj2.obj1 = obj1;
+        let result = deepCloneMerge(obj1);
+        result.obj2.obj1.should.equal(result);
+        result.obj2.obj1.obj2.should.equal(result.obj2);
+    });
+
+    it('should clone repeated objects to the same referenced object', () => {
+        obj1.obj2a = obj2;
+        obj1.obj2b = obj2;
+        let result = deepCloneMerge(obj1);
+        result.obj2a.should.equal(result.obj2b);
+    });
+
+    it('should clone repeated objects to different objects when using the circular variant', () => {
+        obj1.obj2a = obj2;
+        obj1.obj2b = obj2;
+        let result = deepCloneMerge.circular(obj1);
+        result.obj2a.should.not.equal(result.obj2b);
+    });
 });
 
