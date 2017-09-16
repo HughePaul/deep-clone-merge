@@ -1,9 +1,10 @@
 'use strict';
 
-let isObject = obj => obj && typeof obj === 'object';
+let isObject = obj => obj && typeof obj === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
+let isObjectOrArray = obj => isObject(obj) || Array.isArray(obj);
 
 function mergeValue(dest, src, map) {
-    if (!isObject(src)) return src;
+    if (!isObject(src) && !Array.isArray(src)) return src;
 
     if (map) {
         let index = map.src.indexOf(src);
@@ -30,12 +31,12 @@ function mergeValue(dest, src, map) {
 }
 
 function deepCloneMergeCircular() {
-    return [].filter.call(arguments, isObject).reduce((dest, src) => mergeValue(dest, src), {});
+    return [].filter.call(arguments, isObjectOrArray).reduce((dest, src) => mergeValue(dest, src), {});
 }
 
 function deepCloneMerge() {
     let map = { src: [], dest: [] };
-    return [].filter.call(arguments, isObject).reduce((dest, src) => mergeValue(dest, src, map), {});
+    return [].filter.call(arguments, isObjectOrArray).reduce((dest, src) => mergeValue(dest, src, map), {});
 }
 
 deepCloneMerge.circular = deepCloneMergeCircular;

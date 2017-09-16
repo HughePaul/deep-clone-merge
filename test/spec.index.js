@@ -43,7 +43,7 @@ describe('deepCloneMerge', () => {
         });
     });
 
-    it('clones all values', () => {
+    it('clones all objects and arrays', () => {
         let result = deepCloneMerge(obj1, obj2);
 
         result.should.not.equal(obj1);
@@ -54,9 +54,22 @@ describe('deepCloneMerge', () => {
         result.array.should.not.equal(obj2.array);
     });
 
+    it('does not clone instances', () => {
+        class A {}
+        let object = {};
+        let instance = new A;
+        let regexp = /abc/;
+        let result = deepCloneMerge({ object, regexp, instance });
+        result.instance.should.equal(instance);
+        result.regexp.should.equal(regexp);
+        result.object.should.not.equal(object);
+    });
+
     it('should return an array if the inout object is an array', () => {
-        let result = deepCloneMerge([1, 2, 3]);
-        result.should.eql([1, 2, 3]);
+        let array = [1, 2, 3];
+        let result = deepCloneMerge(array);
+        result.should.not.equal(array);
+        result.should.eql(array);
     });
 
     it('should clone a circular object', () => {
