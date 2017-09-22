@@ -31,13 +31,23 @@ function mergeValue(dest, src, map) {
 }
 
 function deepCloneMergeCircular() {
-    return [].filter.call(arguments, isObjectOrArray).reduce((dest, src) => mergeValue(dest, src), {});
+    let sources = [].filter.call(arguments, isObjectOrArray);
+    return sources.reduce((dest, src) => mergeValue(dest, src), {});
 }
 
 function deepCloneMerge() {
     let map = { src: [], dest: [] };
-    return [].filter.call(arguments, isObjectOrArray).reduce((dest, src) => mergeValue(dest, src, map), {});
+    let sources = [].filter.call(arguments, isObjectOrArray);
+    return sources.reduce((dest, src) => mergeValue(dest, src, map), {});
+}
+
+function deepCloneExtend(dest) {
+    let map = { src: [], dest: [] };
+    let sources = [].slice.call(arguments, 1);
+    sources = sources.filter(isObjectOrArray);
+    return sources.reduce((dest, src) => mergeValue(dest, src, map), dest);
 }
 
 deepCloneMerge.circular = deepCloneMergeCircular;
+deepCloneMerge.extend = deepCloneExtend;
 module.exports = deepCloneMerge;

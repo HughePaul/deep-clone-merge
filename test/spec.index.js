@@ -101,5 +101,22 @@ describe('deepCloneMerge', () => {
         let result = deepCloneMerge.circular(obj1);
         result.obj2a.should.not.equal(result.obj2b);
     });
+
+    it('extend merges sources with a dest object', () => {
+        let original = {};
+        let dest = { original };
+        let result = deepCloneMerge.extend(dest, obj1, obj2);
+
+        result.should.equal(dest);
+        dest.original.should.equal(original);
+        result.original.should.equal(original);
+
+        result.should.not.equal(obj1);
+        result.should.not.equal(obj2);
+        result.object.should.not.equal(obj1.object);
+        result.object.should.not.equal(obj2.object);
+        result.array.should.not.equal(obj1.array);
+        result.array.should.not.equal(obj2.array);
+    });
 });
 
