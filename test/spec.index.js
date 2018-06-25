@@ -1,6 +1,7 @@
 'use strict';
 
 require('chai').should();
+let expect = require('chai').expect;
 
 const deepCloneMerge = require('../');
 
@@ -117,6 +118,15 @@ describe('deepCloneMerge', () => {
         result.object.should.not.equal(obj2.object);
         result.array.should.not.equal(obj1.array);
         result.array.should.not.equal(obj2.array);
+    });
+
+    it('should not pollute prototype of destination object', () => {
+        let attack = '{"__proto__":{"foo":"bar"}}';
+        let obj = {};
+
+        deepCloneMerge.extend(obj, JSON.parse(attack));
+
+        expect(obj.foo).to.be.undefined;
     });
 });
 
