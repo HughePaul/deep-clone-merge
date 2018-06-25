@@ -24,7 +24,10 @@ function mergeValue(dest, src, map) {
             map.src.push(src);
             map.dest.push(dest);
         }
-        Object.keys(src).forEach(key => dest[key] = mergeValue(dest[key], src[key], map));
+        Object.keys(src).forEach(key => {
+            if (key === '__proto__') return;
+            dest[key] = mergeValue(dest[key], src[key], map);
+        });
     }
 
     return dest;
