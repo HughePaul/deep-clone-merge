@@ -14,14 +14,18 @@ describe('deepCloneMerge', () => {
             number: 1,
             string: 'abc',
             object: { foo: 'bar' },
-            array: [1, 2, 3, 4, 5, 6]
+            array: [1, 2, 3, 4, 5, 6],
+            map: new Map([['a', 1], ['b', 2]]),
+            set: new Set([1, 2, 3, 4, 5, 6])
         };
 
         obj2 = {
             number: 2,
             string: 'def',
             object: { boo: 'baz' },
-            array: [7, 8, 9]
+            array: [7, 8, 9],
+            map: new Map([['b', 3], ['c', 4]]),
+            set: new Set([7, 8, 9])
         };
     });
 
@@ -40,7 +44,9 @@ describe('deepCloneMerge', () => {
                 foo: 'bar',
                 boo: 'baz'
             },
-            array: [7, 8, 9]
+            array: [7, 8, 9],
+            map: new Map([['a', 1], ['b', 3], ['c', 4]]),
+            set: new Set([7, 8, 9])
         });
     });
 
