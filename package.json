@@ -1,6 +1,6 @@
 {
   "name": "deep-clone-merge",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Opinionated deep clone merge. Arrays are cloned and overwritten.",
   "main": "index.js",
   "scripts": {
