@@ -5,8 +5,6 @@ let isSetOrMap = obj => obj instanceof Set || obj instanceof Map;
 let isCollection = obj => isObject(obj) || Array.isArray(obj) || isSetOrMap(obj);
 
 function mergeValue(dest, src, map) {
-    if (!isCollection(src)) return src;
-
     if (map && map.has(src)) return map.get(src);
 
     if (Array.isArray(src)) {
