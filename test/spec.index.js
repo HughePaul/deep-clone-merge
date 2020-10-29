@@ -127,12 +127,13 @@ describe('deepCloneMerge', () => {
     });
 
     it('should not pollute prototype of destination object', () => {
-        let attack = '{"__proto__":{"foo":"bar"}}';
+        let attack = '{"__proto__":{"foo":"bar"},"constructor":{"prototype":{"boo":"baa"}}}';
         let obj = {};
 
         deepCloneMerge.extend(obj, JSON.parse(attack));
 
         expect(obj.foo).to.be.undefined;
+        expect(obj.boo).to.be.undefined;
     });
 });
 
