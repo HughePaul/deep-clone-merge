@@ -1,5 +1,6 @@
 'use strict';
 
+const RESERVED_OBJECT_KEYS = Object.getOwnPropertyNames(Object.prototype);
 let isObject = obj => obj && typeof obj === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
 let isSetOrMap = obj => obj instanceof Set || obj instanceof Map;
 let isCollection = obj => isObject(obj) || Array.isArray(obj) || isSetOrMap(obj);
@@ -18,7 +19,7 @@ function mergeValue(dest, src, map) {
         dest = isObject(dest) ? dest : {};
         if (map) map.set(src, dest);
         Object.keys(src).forEach(key => {
-            if (key === '__proto__') return;
+            if (RESERVED_OBJECT_KEYS.includes(key)) return;
             dest[key] = mergeValue(dest[key], src[key], map);
         });
         return dest;
