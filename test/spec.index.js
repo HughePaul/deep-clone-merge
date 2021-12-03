@@ -72,7 +72,7 @@ describe('deepCloneMerge', () => {
         result.object.should.not.equal(object);
     });
 
-    it('should return an array if the inout object is an array', () => {
+    it('should return an array if the in object is an array', () => {
         let array = [1, 2, 3];
         let result = deepCloneMerge(array);
         result.should.not.equal(array);
@@ -109,6 +109,25 @@ describe('deepCloneMerge', () => {
         result.obj2a.should.not.equal(result.obj2b);
     });
 
+    it('should clone null prototype objects', () => {
+        obj1 = Object.assign(Object.create(null), obj1);
+        obj1.object = Object.assign(Object.create(null), obj1.object);
+        obj2 = Object.assign(Object.create(null), obj2);
+        let result = deepCloneMerge(obj1, obj2);
+
+        result.should.eql({
+            number: 2,
+            string: 'def',
+            object: {
+                foo: 'bar',
+                boo: 'baz'
+            },
+            array: [7, 8, 9],
+            map: new Map([['a', 1], ['b', 3], ['c', 4]]),
+            set: new Set([7, 8, 9])
+        });
+    });
+
     it('extend merges sources with a dest object', () => {
         let original = {};
         let dest = { original };
@@ -132,6 +151,8 @@ describe('deepCloneMerge', () => {
 
         deepCloneMerge.extend(obj, JSON.parse(attack));
 
+        expect(Object.prototype.foo).to.be.undefined;
+        expect(Object.prototype.boo).to.be.undefined;
         expect(obj.foo).to.be.undefined;
         expect(obj.boo).to.be.undefined;
     });
