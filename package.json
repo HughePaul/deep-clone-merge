@@ -4,7 +4,7 @@
   "description": "Opinionated deep clone merge. Arrays are cloned and overwritten.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test:lint && npm run test:unit && npm run test:cover && npm audit",
+    "test": "npm run test:lint && npm run test:unit && npm run test:cover && npm audit --production",
     "test:lint": "eslint .",
     "test:unit": "nyc --reporter=lcov --reporter=text-summary _mocha ./test --recursive",
     "test:cover": "nyc check-coverage"
